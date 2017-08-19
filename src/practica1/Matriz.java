@@ -7,7 +7,7 @@ public class Matriz {
     Random ram=new Random();
     Random ram2=new Random();
     Scanner scan=new Scanner(System.in);
-    int opcionMenu, fil,col, numBomba, filAL,colAL,opJuego,selFil,selCol;
+    int opcionMenu, fil,col, numBomba, filAL,colAL,opJuego,selFil,selCol,contV,j;
     int interna[][]; 
     String Externa[][];
     //hh
@@ -118,7 +118,6 @@ public class Matriz {
                interna[x][y]=contMina;
                }
            }//for de columnas
-           
        }//for de filas
        Externa=new String[fil][col];
        for(int i=0;i<fil;i++){
@@ -130,27 +129,71 @@ public class Matriz {
     }// metodo de llenado
     public void Juego(){
        System.out.println("\n\n\n");
-       System.out.println("               Elija una opcion");
+       System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+       System.out.println("\n\n                               BUSCAMINAS");
+       System.out.println("                            Elija una opcion\n");
        for(int i=0;i<fil;i++){
-           System.out.println("");
-           for(int j=0;j<col;j++){
+           
+           System.out.print("                          ");
+           for(j=0;j<col;j++){
                 System.out.print("["+Externa[i][j]+"]");
+                if(j==(col-1)){
+           System.out.println("");    
+           }
            }//for col
        }//for fil
+       
+               for(int c=0;c<fil;c++){
+                for(int d=0;d<col;d++){
+                    if(Externa[c][d].equals("*")){
+                        contV++;
+                    }
+                }//contador de columnas para victorias
+               }//contador de filas para victoria
+               switch(opcionMenu){
+                   case 1:
+                       if(contV==4){
+                           System.out.println("\n\n\n\n\n               Has ganado el juego por descubrir todas las casillas sin bomba.\n\n\n\n");
+                           llenadoMatriz();
+                       }
+                       break;
+                   case 2:
+                       if(contV==8){
+                           System.out.println("\n\n\n\n\n               Has ganado el juego por descubrir todas las casillas sin bomba.\n\n\n\n");
+                           llenadoMatriz();
+                       }
+                       break;
+                   case 3:
+                       if(contV==12){
+                           System.out.println("\n\n\n\n\n               Has ganado el juego por descubrir todas las casillas sin bomba.\n\n\n\n");
+                           llenadoMatriz();
+                       }
+                       break;
+               }
+               contV=0;
        System.out.println("\n\n");
-       System.out.println("              1. Descubrir Casilla");
-       System.out.println("              2. Reinciar");
-       System.out.println("              3. Salir");
+       System.out.println("                             1. Descubrir Casilla");
+       System.out.println("                             2. Reinciar");
+       System.out.println("                             3. Salir");
        opJuego=scan.nextInt();
        switch(opJuego){
            case 1:
-               System.out.println("          Ingrese el numero de fila entre 1 y "+fil);
+               System.out.println("                              Ingrese el numero de fila entre 1 y "+fil);
                selFil=scan.nextInt();
                selFil--;
-               System.out.println("          Ingrese el numero de columna entre 1 y "+col);
+               System.out.println("                              Ingrese el numero de columna entre 1 y "+col);
                selCol=scan.nextInt();
                selCol--;
                if(interna[selFil][selCol]==-1){
+                   System.out.println("\n\n\n\n");
+                   Externa[selFil][selCol]="X";
+                   for(int e=0;e<fil;e++){
+                       System.out.println("");
+                       for(int f=0;f<col;f++){
+                           System.out.print("["+Externa[e][f]+"]");
+                       }
+                   }
+                   
                    System.out.println("\n\n\n         Has perdido el juego por seleccionar una mina, vuelve a intentarlo.");
                    llenadoMatriz();
                }else{
@@ -183,9 +226,9 @@ public class Matriz {
                    }//for
                    Juego();
                }
-               
                break;
            case 2:
+               System.out.println("\n\n\n\n\n\n\n");
                Menu m=new Menu();
                m.menu();
                break;
@@ -193,6 +236,8 @@ public class Matriz {
                System.exit(0);
                break;
            case 100:
+               System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+               System.out.println("                  Solucionario!!!\n");
                for(int a=0;a<fil;a++){
                    System.out.println("");
                  for(int b=0;b<col;b++){
@@ -200,8 +245,11 @@ public class Matriz {
                } }
                Juego();
                break;
+           default:
+               System.out.println("\n\n                    Has seleccionado una opcion que no esta dentro del menu, vuelve a seleccionar de 1 a 3 por favor. ");
+               Juego();
+               break;
        }
        System.out.println("\n\n");
     }// metodo juego
-    
 }//clase matriz
