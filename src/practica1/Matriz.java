@@ -7,9 +7,11 @@ public class Matriz {
     Random ram=new Random();
     Random ram2=new Random();
     Scanner scan=new Scanner(System.in);
-    int opcionMenu, fil,col, numBomba, filAL,colAL,opJuego,selFil,selCol,contV,j;
+    Scanner scanSTRING = new Scanner(System.in);
+    int opcionMenu, fil,col, numBomba, filAL,colAL,opJuego,selFil,selCol,contV,j,tu;
     int interna[][]; 
     String Externa[][];
+    String confirmacion, seleccion;
     //hh
     public void Dificultad(int opcionMenu){
         try{
@@ -133,10 +135,10 @@ public class Matriz {
        System.out.println("\n\n                               BUSCAMINAS");
        System.out.println("                            Elija una opcion\n");
        for(int i=0;i<fil;i++){
-           
            System.out.print("                          ");
            for(j=0;j<col;j++){
                 System.out.print("["+Externa[i][j]+"]");
+                //el siguiente if es para que al momento de que termine de escribir la fila haga un salto de linea esto para dejar centrada la matriz
                 if(j==(col-1)){
            System.out.println("");    
            }
@@ -178,13 +180,30 @@ public class Matriz {
        opJuego=scan.nextInt();
        switch(opJuego){
            case 1:
-               System.out.println("                              Ingrese el numero de fila entre 1 y "+fil);
-               selFil=scan.nextInt();
+               System.out.println("                              Ingrese el numero de fila y columna de esta manera (x,y) entre 1 y "+fil+" 'SIN PARENTESIS'");
+               seleccion=scanSTRING.nextLine();
+               seleccion.replaceAll(" " , "");
+               try{
+               selFil=Integer.parseInt(""+seleccion.charAt(0));
+               selCol=Integer.parseInt(""+seleccion.charAt(seleccion.length()-1));
+               }catch(Exception tu){
+                   System.out.println("\n\n                     No ingreso de manera correcta las coordenadas de la casilla");
+                   System.out.println("                     ingreselas de esta manera (x,y) sin parentesis!!!");
+                   Juego();
+                   
+               }
                selFil--;
-               System.out.println("                              Ingrese el numero de columna entre 1 y "+col);
-               selCol=scan.nextInt();
                selCol--;
+               System.out.println("\n                             Esta seguro que desea descubrir la casilla "+(selFil+1)+","+(selCol+1)+" ?");
+               System.out.println("\n                             Si esta seguro que desea hacerlo presione 'y' si no lo esta presione 'n'");
+               confirmacion = scanSTRING.nextLine();
+               if(confirmacion.equals("n")){
+                   Juego();
+               }
+               if(Externa[selFil][selCol].equals("*")){
+               try{
                if(interna[selFil][selCol]==-1){
+                   System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                    System.out.println("\n\n\n\n");
                    Externa[selFil][selCol]="X";
                    for(int e=0;e<fil;e++){
@@ -193,8 +212,7 @@ public class Matriz {
                            System.out.print("["+Externa[e][f]+"]");
                        }
                    }
-                   
-                   System.out.println("\n\n\n         Has perdido el juego por seleccionar una mina, vuelve a intentarlo.");
+                   System.out.println("\n\n\n                 Has perdido el juego por seleccionar una mina en la casilla "+(selFil+1)+","+(selCol+1)+ " vuelve a intentarlo.");
                    llenadoMatriz();
                }else{
                    Externa[selFil][selCol]=Integer.toString(interna[selFil][selCol]);
@@ -224,6 +242,17 @@ public class Matriz {
                        }//switch
                        }catch(Exception a){}//try
                    }//for
+                   Juego();
+               }
+               }catch(Exception z){
+                   System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                   System.out.println("\n\n\n                               La casilla que selecciono no existe en el juego, seleccione de nuevo porfavor");
+                   Juego();
+               }
+               }//if que comprueba si la casilla seleccionada esta desbloqueada o no 
+               else{
+                   System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                   System.out.println("\n\n\n\n                                        La casilla que usted selecciono ya se encuentra descubierta, seleccione nuevamente");
                    Juego();
                }
                break;
