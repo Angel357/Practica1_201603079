@@ -248,7 +248,7 @@ public class Matriz {
                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                    System.out.println("\n\n\n                               La casilla que selecciono no existe en el juego, seleccione de nuevo porfavor");
                    Juego();
-               }
+               }// en este try catch se ejecuta en caso de que el usuario ingrese alguna casilla que no se encuentre dentro de la matriz del nivel que seleccione
                }//if que comprueba si la casilla seleccionada esta desbloqueada o no 
                else{
                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
