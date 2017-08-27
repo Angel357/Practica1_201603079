@@ -36,7 +36,12 @@ public class Matriz {
                 llenadoMatriz();
                 break;
             case 4:
-                System.exit(0);
+               fil=25;
+               col=40;
+               llenadoMatriz();
+                break;
+            case 5:
+                 System.exit(0);
                 break;
             default:
                 
@@ -55,6 +60,9 @@ public class Matriz {
                break;
            case 3:
                 numBomba=12;
+               break;
+           case 4:
+               numBomba=250;
                break;
        }
         //Aca se agregan de forma aleatoria la minas en la matriz
@@ -205,13 +213,20 @@ public class Matriz {
                if(interna[selFil][selCol]==-1){
                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                    System.out.println("\n\n\n\n");
-                   Externa[selFil][selCol]="X";
+                   System.out.println("                               Juego perdido!!!\n\n");
                    for(int e=0;e<fil;e++){
-                       System.out.println("");
+                       System.out.print("                          ");
                        for(int f=0;f<col;f++){
+                           Externa[e][f]=Integer.toString(interna[e][f]);
+                           if(interna[e][f]==-1){
+                            Externa[e][f]="X";
+                           }
                            System.out.print("["+Externa[e][f]+"]");
-                       }
-                   }
+                           if(f==(fil-1)){
+                                System.out.println("");
+                            }
+                       }//for de impresion en columnas
+                   }//for de impresion en filas
                    System.out.println("\n\n\n                 Has perdido el juego por seleccionar una mina en la casilla "+(selFil+1)+","+(selCol+1)+ " vuelve a intentarlo.");
                    llenadoMatriz();
                }else{
